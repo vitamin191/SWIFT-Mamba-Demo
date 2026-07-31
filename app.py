@@ -117,13 +117,17 @@ def process_signal(model, noisy_raw):
     
     return noisy_raw, denoised_wave[:len(noisy_raw)]
 
-def handle_upload(file_obj):
-    st.error(model_status)
-    st.stop()
-elif "警告" in model_status:
+# --- 修复后的逻辑块开始 ---
+model, model_status = load_model()
+
+if "警告" in model_status:
     st.warning(model_status)
 elif "失败" in model_status:
     st.error(model_status)
+    st.stop()
+elif "成功" in model_status:
+    st.success(model_status)
+# --- 修复后的逻辑块结束 ---
 
 col1, col2 = st.columns([1, 2])
 
