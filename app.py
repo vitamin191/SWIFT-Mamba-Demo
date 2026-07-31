@@ -99,25 +99,25 @@ def process_signal(model, noisy_raw):
     # 应用掩码与 ISTFT 逆变换
     mask_complex = pred_mask[0] + 1j * pred_mask[1]
     denoised_stft_trunc = noisy_stft_trunc * mask_complex
+
     denoised_stft = np.pad(denoised_stft_trunc, ((0, 1), (0, 0)), mode="constant")
-    _, denoised_wave = scipy.signal.istft(denoised_stft, fs=config.fs, nperseg=config.nperseg, nfft=config.nfft)
+    _, denoised_wave = scipy.signal.istft(
+        denoised_stft,
+        fs=config.fs,
+        nperseg=config.nperseg,
+        nfft=config.nfft,
+        boundary=True # 保持与默认行为一致，但关键在下面强制修复长度
+    )
     
-    return noisy_raw, denoised_wave[:len(noisy_raw)], latency
+    # 【关键修改】：强制调整输出波形的长度到 1024，解决绘图尺寸不匹配的问题
+    if len(denoised_wave) > config.nt:
+        denoised_wave = denoised_wave[:config.nt]
+    elif len(denoised_wave) < config.nt:
+        denoised_wave = np.pad(denoised_wave, (0, config.nt - len(denoised_wave)))
+    
+    return noisy_raw, denoised_wave[:len(noisy_raw)]
 
-# =========================================================================
-# 4. 构建 Streamlit 网页 UI
-# =========================================================================
-st.set_page_config(page_title="SWIFT-Mamba Denoising Demo", page_icon="🚁", layout="wide")
-
-st.title("🚁 SWIFT-Mamba: Non-contact Wavefront Sensing Denoising")
-st.markdown("""
-Welcome to the interactive demonstration for the SWIFT-Mamba algorithm.
-Please upload a sample of noisy 1D wavefront vibration data (`.npz` or `.csv`), and the algorithm will process it to reconstruct the clean signal.
-""")
-
-# 加载模型
-model, model_status = load_model()
-if model is None:
+def handle_upload(file_obj):
     st.error(model_status)
     st.stop()
 elif "警告" in model_status:
