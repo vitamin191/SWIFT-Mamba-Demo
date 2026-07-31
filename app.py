@@ -115,7 +115,7 @@ def process_signal(model, noisy_raw):
     elif len(denoised_wave) < config.nt:
         denoised_wave = np.pad(denoised_wave, (0, config.nt - len(denoised_wave)))
     
-    return noisy_raw, denoised_wave[:len(noisy_raw)]
+    return noisy_raw, denoised_wave[:len(noisy_raw)], latency
 
 # --- 修复后的逻辑块开始 ---
 model, model_status = load_model()
