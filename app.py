@@ -182,7 +182,7 @@ with col2:
             with st.spinner('Processing signal...'):
                 noisy_processed, denoised_wave, latency = process_signal(model, noisy_raw)
 
-            fig, axes = plt.subplots(2, 1, figsize=(6, 2.5), sharex=True)
+            fig, axes = plt.subplots(2, 1, figsize=(6, 3.5), sharex=True)
             time_axis = np.arange(len(noisy_processed)) / config.fs * 1000
             
             axes[0].plot(time_axis, noisy_processed, color='#ef4444', linewidth=1, label='Noisy Input')
