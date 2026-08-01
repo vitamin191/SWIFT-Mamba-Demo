@@ -195,16 +195,16 @@ with col2:
             axes[0].set_title(f'Noisy Signal: {file_name_to_show}', fontsize=11, fontweight='bold')
             axes[0].legend(loc='upper right', fontsize=9)
             axes[0].grid(True, linestyle='--', alpha=0.5)
-            # Remove x and y tick labels
-            axes[0].tick_params(axis='both', which='both', labelbottom=False, labelleft=False)
+            # Remove x and y tick labels AND tick marks
+            axes[0].tick_params(axis='both', which='both', bottom=False, left=False, labelbottom=False, labelleft=False)
 
             axes[1].plot(time_axis, denoised_wave, color='#3b82f6', linewidth=1, label='SWIFT-Mamba Denoised')
             axes[1].set_title('Denoised Output Reconstruction', fontsize=11, fontweight='bold')
-            axes[1].set_xlabel('Time (ms)', fontsize=10)
+            # Removed axes[1].set_xlabel('Time (ms)', fontsize=10)
             axes[1].legend(loc='upper right', fontsize=9)
             axes[1].grid(True, linestyle='--', alpha=0.5)
-            # Remove x and y tick labels
-            axes[1].tick_params(axis='both', which='both', labelbottom=False, labelleft=False)
+            # Remove x and y tick labels AND tick marks
+            axes[1].tick_params(axis='both', which='both', bottom=False, left=False, labelbottom=False, labelleft=False)
             
             plt.tight_layout()
 
