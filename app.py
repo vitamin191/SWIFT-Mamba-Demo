@@ -119,7 +119,7 @@ with col1:
     st.info("Instructions: Upload a 1D array of approximately 1024 points.")
 
 with col2:
-    st.header("2. Results")
+    st.header("2. Result")
     
     if uploaded_file is not None:
         try:
@@ -137,7 +137,7 @@ with col2:
             with st.spinner('Processing signal...'):
                 noisy_processed, denoised_wave, latency = process_signal(model, noisy_raw)
             
-            fig, axes = plt.subplots(2, 1, figsize=(10, 6), sharex=True)
+            fig, axes = plt.subplots(2, 1, figsize=(8, 4.5), sharex=True)
             time_axis = np.arange(len(noisy_processed)) / config.fs * 1000
             
             axes[0].plot(time_axis, noisy_processed, color='#ef4444', linewidth=1, label='Noisy Input')
