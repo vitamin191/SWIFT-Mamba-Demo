@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 st.set_page_config(page_title="SWIFT-Mamba Denoising", layout="wide")
-st.title("SWIFT-Mamba: Non-contact Wavefront Sensing Denoising")
+st.title("🚁 SWIFT-Mamba: Non-contact Wavefront Sensing Denoising")
 st.markdown("Welcome to the interactive demonstration for the SWIFT-Mamba algorithm. Please upload your noisy data or select a sample to see the denoising results.")
 st.divider()
 
@@ -18,21 +18,26 @@ from swift_mamba_model import SWIFTMambaNet
 device = torch.device("cpu") 
 MODEL_PATH = "best_model_weights.pth"
 
+# GitHub dataset raw URL base
 GITHUB_RAW_BASE_URL = "https://raw.githubusercontent.com/vitamin191/SWIFT-Mamba-Demo/main/dataset/"
 
+# List of sample files extracted from your images
 SAMPLE_FILES = [
     "Select a sample...",
+    # Batch 1
     "0.50_806.npz", "0.50_1751.npz", "0.50_3410.npz",
     "0.62_457.npz", "0.62_657.npz", "0.62_1061.npz", "0.62_1536.npz", "0.62_1550.npz", "0.62_4182.npz", "0.62_5012.npz",
     "0.75_1409.npz", "0.75_1583.npz", "0.75_2957.npz", "0.75_5636.npz",
     "0.81_864.npz", "0.81_4721.npz", "0.81_4767.npz",
     "0.87_768.npz",
+    # Batch 2
     "0.87_1017.npz", "0.87_1820.npz",
     "0.93_1219.npz", "0.93_1599.npz", "0.93_2396.npz",
     "1.00_1503.npz", "1.00_2641.npz", "1.00_4392.npz",
     "1.06_531.npz", "1.06_2543.npz", "1.06_3540.npz",
     "1.12_135.npz", "1.12_460.npz", "1.12_833.npz", "1.12_2553.npz",
     "1.18_17.npz", "1.18_378.npz", "1.18_3649.npz",
+    # Batch 3
     "1.062_175.npz", "1.062_208.npz", "1.062_997.npz",
     "1.0615_342.npz", "1.0615_3148.npz",
     "1.0618_44.npz", "1.0618_69.npz", "1.0618_342.npz"
@@ -47,7 +52,7 @@ class Config:
 
 config = Config()
 
-# @st.cache_resource
+@st.cache_resource
 def load_model():
     model = SWIFTMambaNet(
         ablation_mode="dual_softclip", 
@@ -144,6 +149,7 @@ with col1:
     st.subheader("Or Load Sample Data")
     selected_sample = st.selectbox("Choose a sample dataset:", SAMPLE_FILES)
 
+    st.info("Instructions: Upload a 1D array of approximately 1024 points, or select a sample dataset above.")
 
 with col2:
     st.header("2. Results")
@@ -180,8 +186,6 @@ with col2:
                 noisy_raw = noisy_raw.flatten()
 
             with st.spinner('Processing signal...'):
-                noisy_processed, denoised_wave, latency = process_signal(model, noisy_raw)
-
             fig, axes = plt.subplots(2, 1, figsize=(6, 3.5), sharex=True)
             time_axis = np.arange(len(noisy_processed)) / config.fs * 1000
             
@@ -189,12 +193,17 @@ with col2:
             axes[0].set_title(f'Noisy Signal: {file_name_to_show}', fontsize=11, fontweight='bold')
             axes[0].legend(loc='upper right', fontsize=9)
             axes[0].grid(True, linestyle='--', alpha=0.5)
+            # Remove x and y tick labels
+            axes[0].tick_params(axis='both', which='both', labelbottom=False, labelleft=False)
 
             axes[1].plot(time_axis, denoised_wave, color='#3b82f6', linewidth=1, label='SWIFT-Mamba Denoised')
             axes[1].set_title('Denoised Output Reconstruction', fontsize=11, fontweight='bold')
             axes[1].set_xlabel('Time (ms)', fontsize=10)
             axes[1].legend(loc='upper right', fontsize=9)
             axes[1].grid(True, linestyle='--', alpha=0.5)
+            # Remove x and y tick labels
+            axes[1].tick_params(axis='both', which='both', labelbottom=False, labelleft=False)
+            
             plt.tight_layout()
 
             st.pyplot(fig)
