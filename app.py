@@ -25,7 +25,7 @@ GITHUB_RAW_BASE_URL = "https://raw.githubusercontent.com/vitamin191/SWIFT-Mamba-
 SAMPLE_FILES = [
     "Select a sample...",
     "0.62_1061.npz", "0.75_1583.npz", "0.81_864.npz",  "0.81_4767.npz", "0.87_1017.npz", "1.00_1503.npz", 
-    "1.12_135.npz", "1.12_460.npz",  "1.18_17.npz", "1.0615_342.npz", 
+    "1.12_135.npz", "1.12_460.npz",  "1.0615_342.npz", 
 ]
 
 class Config:
