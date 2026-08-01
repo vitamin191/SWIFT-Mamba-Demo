@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 st.set_page_config(page_title="SWIFT-Mamba Denoising", layout="wide")
-st.title("SWIFT-Mamba： A Lightweight State Space Model Toward In-Situ Verification of Airborne Wavefront Sensing Signals")
+st.title("🚁 SWIFT-Mamba: Non-contact Wavefront Sensing Denoising")
 st.markdown("Welcome to the interactive demonstration for the SWIFT-Mamba algorithm. Please upload your noisy data to see the denoising results.")
 st.divider()
 
@@ -136,8 +136,6 @@ with col2:
 
             with st.spinner('Processing signal...'):
                 noisy_processed, denoised_wave, latency = process_signal(model, noisy_raw)
-
-            st.success(f"Denoising complete! Inference latency: {latency:.2f} ms")
             
             fig, axes = plt.subplots(2, 1, figsize=(10, 6), sharex=True)
             time_axis = np.arange(len(noisy_processed)) / config.fs * 1000
