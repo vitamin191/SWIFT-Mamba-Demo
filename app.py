@@ -47,7 +47,7 @@ class Config:
 
 config = Config()
 
-@st.cache_resource
+# @st.cache_resource
 def load_model():
     model = SWIFTMambaNet(
         ablation_mode="dual_softclip", 
