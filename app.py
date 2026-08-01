@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import streamlit as st
 
 st.set_page_config(page_title="SWIFT-Mamba Denoising", layout="wide")
-st.title("🚁 SWIFT-Mamba: Non-contact Wavefront Sensing Denoising")
+st.title("SWIFT-Mamba: Non-contact Wavefront Sensing Denoising")
 st.markdown("Welcome to the interactive demonstration for the SWIFT-Mamba algorithm. Please upload your noisy data or select a sample to see the denoising results.")
 st.divider()
 
