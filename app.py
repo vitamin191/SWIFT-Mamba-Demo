@@ -186,6 +186,8 @@ with col2:
                 noisy_raw = noisy_raw.flatten()
 
             with st.spinner('Processing signal...'):
+                noisy_processed, denoised_wave, latency = process_signal(model, noisy_raw)
+
             fig, axes = plt.subplots(2, 1, figsize=(6, 3.5), sharex=True)
             time_axis = np.arange(len(noisy_processed)) / config.fs * 1000
             
